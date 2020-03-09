@@ -1,0 +1,54 @@
+###############################################################################
+#                          Generated on phpdocker.io                          #
+###############################################################################
+version: "3.1"
+services:
+
+    web:
+      image: nginx:alpine
+      container_name: cakephp4-web
+      working_dir: /app
+      volumes:
+          - ./app:/app
+          - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      ports:
+       - "8081:8081"
+      depends_on:
+        - php
+      networks:
+        - local
+
+    mysql:
+      image: mysql:5.7
+      container_name: cakephp4-mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: ${DB_PASS}
+        MYSQL_DATABASE: ${DB_NAME}
+      ports:
+        - "3306:3306"
+      volumes:
+        - ./data:/var/lib/mysql
+      networks:
+        - local
+
+    php:
+      build: docker/php
+      container_name: cakephp4-php
+      working_dir: /app
+      volumes:
+        - ./app:/app
+        - ./docker/php/php-ini-overrides.ini:/etc/php/7.2/fpm/conf.d/99-overrides.ini
+      environment:
+        DEBUG: ${DEBUG}
+        DB_HOST: mysql
+        DB_USER: ${DB_USER}
+        DB_PASS: ${DB_PASS}
+        DB_NAME: ${DB_NAME}
+      depends_on:
+        - mysql
+      networks:
+        - local
+
+networks:
+  local:
+    driver: bridge

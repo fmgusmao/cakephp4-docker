@@ -21,7 +21,6 @@ services:
     mysql:
       user: ${UID}:${UID}
       image: mysql:5.7
-      container_name: cakephp4-mysql
       environment:
         MYSQL_ROOT_PASSWORD: ${DB_PASS}
         MYSQL_DATABASE: ${DB_NAME}

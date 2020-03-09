@@ -21,9 +21,12 @@ services:
     mysql:
       user: ${UID}:${UID}
       image: mysql:5.7
+      container_name: cakephp4-mysql
       environment:
-        MYSQL_ROOT_PASSWORD: ${DB_PASS}
-        MYSQL_DATABASE: ${DB_NAME}
+        MYSQL_USER: "${DB_USER}"
+        MYSQL_PASSWORD: "${DB_PASS}"
+        MYSQL_ROOT_PASSWORD: "${DB_PASS}"
+        MYSQL_DATABASE: "${DB_NAME}"
       ports:
         - "3306:3306"
       volumes:
@@ -32,7 +35,6 @@ services:
         - local
 
     php:
-      user: ${UID}:${UID}
       build: docker/php
       container_name: cakephp4-php
       working_dir: /app
@@ -45,7 +47,7 @@ services:
         DB_USER: ${DB_USER}
         DB_PASS: ${DB_PASS}
         DB_NAME: ${DB_NAME}
-      depends_on:
+      links:
         - mysql
       networks:
         - local

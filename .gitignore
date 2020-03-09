@@ -1,6 +1,9 @@
 /data
 !/data/.gitkeep
 
+/app
+!/app/.gitkeep
+
 # OS generated files #
 ######################
 .DS_Store

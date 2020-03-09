@@ -1,5 +1,5 @@
-./data/
-!./data/.gitkeep
+/data
+!/data/.gitkeep
 
 # OS generated files #
 ######################

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-#docker-compose run php composer "$@"
+docker-compose run php composer "$@"

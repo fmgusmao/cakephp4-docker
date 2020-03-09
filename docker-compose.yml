@@ -6,6 +6,7 @@ services:
 
     web:
       image: nginx:alpine
+      container_name: cakephp4-web
       working_dir: /app
       volumes:
           - ./app:/app
@@ -20,6 +21,7 @@ services:
     mysql:
       user: ${UID}:${UID}
       image: mysql:5.7
+      container_name: cakephp4-mysql
       environment:
         MYSQL_ROOT_PASSWORD: ${DB_PASS}
         MYSQL_DATABASE: ${DB_NAME}
@@ -33,6 +35,7 @@ services:
     php:
       user: ${UID}:${UID}
       build: docker/php
+      container_name: cakephp4-php
       working_dir: /app
       volumes:
         - ./app:/app
